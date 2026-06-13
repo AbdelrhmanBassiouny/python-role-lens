@@ -4,6 +4,7 @@
   "description": "Adds seamless IDE autocomplete and Ctrl+Click navigation for dataclass based role classes and delegation wrappers in Python.",
   "version": "1.0.0",
   "publisher": "AbdelrhmanBassiouny",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/your-username/python-role-lens"
