@@ -18,7 +18,23 @@ Navigate through your complex object hierarchies with ease. Stop fighting `__get
    @dataclass
    class Role(Generic[RoleTakerT]):
        _taker: RoleTakerT
-       ...
+       
+       def __getattr__(self, attribute_name: str) -> Any:
+            return getattr(self._taker, attribute_name)
+    
+    @dataclass
+    class Person:
+        name: str
+        age: int
+    
+    @dataclass
+    class Teacher(Role[Person])
+        courses: List
+    
+    teacher = Teacher(_taker=Person("Ahmed", 20))
+    # you can now access Person attributes as if it was inheritance, with hints from IDE and CTRL+Click working.
+    teacher.name
+    teacher.age
     ```
 ## How it works
 
