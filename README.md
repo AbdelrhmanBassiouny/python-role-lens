@@ -1,71 +1,34 @@
-# python-role-lens README
+# Python Role Lens
 
-This is the README for your extension "python-role-lens". After writing up a brief description, we recommend including the following sections.
+A productivity extension for Python developers using the **Role Delegation pattern** (e.g., `Role[T]`). 
+
+Navigate through your complex object hierarchies with ease. Stop fighting `__getattr__` and start coding.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+* **Recursive Autocomplete:** Automatically discovers attributes across nested `Role` proxies.
+* **Intelligent Navigation:** `Ctrl + Click` (or `Cmd + Click`) on delegated attributes (`name`, `age`, `company`) warps your cursor directly to the source declaration, bypassing the dynamic `__getattr__` call.
+* **Pylance Synergy:** Intelligently detects native class attributes to avoid duplicate definition popups, providing a seamless "native-feel" experience.
 
-For example if there is an image subfolder under your extension project workspace:
+## Getting Started
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Install the extension from the VS Code Marketplace.
+2. Ensure your Python classes follow the standard `Role` pattern:
+   ```python
+   @dataclass
+   class Role(Generic[RoleTakerT]):
+       _taker: RoleTakerT
+       ...
+    ```
+## How it works
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+This extension performs static analysis of your class hierarchy to map Role relations. When you navigate to a definition, the extension intercepts the request. If the field is defined natively on the class, it defers to Pylance. If the field is delegated, it recursively resolves the composition chain and teleports you to the absolute origin of the attribute.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- VS Code 1.60.0 or higher.
+- Pylance language server enabled.
 
-## Extension Settings
+## License
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+MIT
